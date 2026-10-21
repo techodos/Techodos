@@ -25,7 +25,7 @@ On Windows, stop `npm run preview` before `npm run build` (the running server lo
 
 ```
 src/config/site.ts        name, email, site URL, mailto helper
-src/content/              all copy and data: product features, plans, services, portfolio, per-page SEO
+src/content/              all copy and data: product features, plans + prices, demo order, services, portfolio, per-page SEO
 src/components/layout/    header, footer, layout, logo
 src/components/ui/        Seo, Reveal, device frames, Tilt, section headers, CTA band/buttons
 src/components/sections/  hero, product tour, pricing, FAQ, journey, service cards
@@ -39,8 +39,21 @@ public/screens/           real product screenshots (demo restaurant, sample data
 ## Content rules
 
 - Only list capabilities that exist in the Restaurant Platform (`src/content/product.ts`).
-- No invented customers, testimonials, statistics, awards or prices. Plans show "Custom pricing".
-- Portfolio restaurants are demos built on the platform and are labelled as such.
+- No invented customers, testimonials, statistics or awards.
+- Prices live in ONE place, `src/content/plans.ts`: early-bird `price` + regular `listPrice` (shown struck through),
+  `PRICE_CURRENCY` and `PRICE_PERIOD`. The hero, pricing cards, comparison table, FAQ answers, SEO descriptions and
+  the pricing page's Offer JSON-LD all read from it — change a price there, nowhere else.
+- Portfolio restaurants are demos built on the platform and are labelled as such. Blue Hour Coffee is the featured one.
+
+## Blue Hour screenshots and the demo order
+
+- `public/screens/blue-hour/` are real captures of the platform running the Blue Hour Coffee demo tenant (desktop
+  1440×900, phone 780×1688). Admin captures show sample customer names. Re-capture them when the platform UI changes.
+- `public/demo/` holds Blue Hour dish photos and hero/about images, copied from the platform repo's
+  `public/images/blue-hour/`.
+- The home page's "Place an order, then be the kitchen" widget (`src/components/sections/LiveDemo.tsx`, data in
+  `src/content/demo-order.ts`) runs only in the browser — it sends nothing. Dishes, prices and the 16% tax match the
+  Blue Hour demo menu.
 
 ## Adding a backend later
 

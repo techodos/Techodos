@@ -1,3 +1,8 @@
+import { PRICE_PERIOD, formatPrice, plans } from "./plans";
+
+const priceList = plans.map((p) => `${p.name} ${formatPrice(p.price)}`).join(", ");
+const fromPrice = formatPrice(Math.min(...plans.map((p) => p.price)));
+
 /** One entry per route. Used by <Seo> in the browser and by the prerender script at build time. */
 export type PageMeta = { path: string; title: string; description: string };
 
@@ -6,7 +11,7 @@ export const pages = {
     path: "/",
     title: "TechOdos | Software & SaaS Solutions",
     description:
-      "TechOdos builds SaaS products and custom web software. Our Restaurant Platform gives restaurants a branded ordering website, reservations, live order tracking and a complete admin dashboard.",
+      `Online ordering your restaurant owns: a branded ordering website, reservations, live order tracking, kitchen view and admin dashboard — from ${fromPrice} ${PRICE_PERIOD}, no commission. Try a demo order at Blue Hour Coffee.`,
   },
   products: {
     path: "/products",
@@ -24,7 +29,7 @@ export const pages = {
     path: "/pricing",
     title: "Pricing | TechOdos Restaurant Platform",
     description:
-      "Starter, Growth and Business plans for the TechOdos Restaurant Platform. Pricing is tailored to your restaurant — book a free demo for a quote.",
+      `${priceList} ${PRICE_PERIOD} — early-bird prices for the TechOdos Restaurant Platform, with no commission on orders. Compare every feature by plan.`,
   },
   services: {
     path: "/services",
@@ -36,7 +41,7 @@ export const pages = {
     path: "/portfolio",
     title: "Portfolio | TechOdos",
     description:
-      "Work by TechOdos: the Restaurant Platform and the demo restaurant websites built on it — a Levantine grill, a coffee house, a buffet and a burger brand.",
+      "Work by TechOdos: the Restaurant Platform and the demo restaurants built on it — featuring Blue Hour Coffee, plus a Levantine grill, a buffet, a burger brand and a pizzeria.",
   },
   about: {
     path: "/about",

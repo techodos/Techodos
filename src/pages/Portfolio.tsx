@@ -1,10 +1,10 @@
-import { Check } from "lucide-react";
+import { ArrowRight, Check } from "lucide-react";
 import { Link } from "react-router-dom";
-import { demoBuilds } from "../content/portfolio";
+import { demoBuilds, featuredBuild } from "../content/portfolio";
 import { screens } from "../content/product";
 import { pages } from "../content/seo";
 import { CtaBand, DemoButton } from "../components/ui/Cta";
-import { BrowserFrame } from "../components/ui/Frames";
+import { BrowserFrame, PhoneFrame } from "../components/ui/Frames";
 import { Reveal } from "../components/ui/Reveal";
 import { PageHero, SectionHead } from "../components/ui/Section";
 import { Seo } from "../components/ui/Seo";
@@ -34,14 +34,56 @@ export default function Portfolio() {
             Work we're <span className="serif">proud</span> to show.
           </>
         }
-        intro="Our flagship build is the TechOdos Restaurant Platform — designed, engineered and run by our team from the ground up."
+        intro="Our flagship build is the TechOdos Restaurant Platform — designed, engineered and run by our team from the ground up. Here it is running Blue Hour Coffee, our featured demo restaurant."
       />
 
-      <section className="section" style={{ paddingTop: 0 }} aria-labelledby="case-title">
+      <section className="section" style={{ paddingTop: 0 }} aria-labelledby="bh-title">
+        <div className="container">
+          <div className="showcase">
+            <Reveal className="showcase__media">
+              <BrowserFrame screen={screens.storefrontHome} url="your-restaurant.com" priority />
+              <PhoneFrame screen={screens.mobileMenu} className="showcase__phone" priority />
+            </Reveal>
+            <Reveal className="showcase__copy" delay={0.08}>
+              <span className="eyebrow">Featured demo restaurant</span>
+              <h2 id="bh-title">{featuredBuild.name}</h2>
+              <p className="lead">
+                {featuredBuild.concept}: espresso bar, slow bar, bakery and all-day breakfast across seven menu categories, with order-ahead pickup,
+                delivery zones and table bookings. Same platform, same admin your restaurant would get.
+              </p>
+              <ul className="tags" aria-label="What the Blue Hour demo shows">
+                {featuredBuild.shows.map((s) => (
+                  <li key={s} className="tag">
+                    {s}
+                  </li>
+                ))}
+              </ul>
+              <div className="showcase__actions">
+                <Link to="/#try" className="btn btn--primary btn--sm">
+                  Place a demo order <ArrowRight className="arrow" aria-hidden="true" />
+                </Link>
+                <Link to="/book-demo" className="btn btn--ghost btn--sm">
+                  Book a free demo
+                </Link>
+              </div>
+            </Reveal>
+          </div>
+          <ul className="showcase__strip" aria-label="Blue Hour admin screens">
+            {[screens.adminDashboard, screens.adminKitchen, screens.adminOrders, screens.adminReports].map((shot, i) => (
+              <Reveal as="li" key={shot.src} delay={i * 0.05}>
+                <img src={shot.src} alt={shot.alt} width={shot.w} height={shot.h} loading="lazy" decoding="async" />
+              </Reveal>
+            ))}
+          </ul>
+          <p className="screen-caption">Real product screens from the Blue Hour demo, with sample data.</p>
+        </div>
+      </section>
+
+      <section className="section section--alt" aria-labelledby="case-title">
         <div className="container">
           <Reveal>
             <Tilt rest="rotateX(5deg) rotateY(0deg)" max={4}>
-              <BrowserFrame screen={screens.storefrontReservations} url="your-restaurant.com/reservation" priority />
+              <BrowserFrame screen={screens.storefrontCheckout} url="your-restaurant.com/checkout" />
             </Tilt>
           </Reveal>
 
@@ -86,16 +128,16 @@ export default function Portfolio() {
         </div>
       </section>
 
-      <section className="section section--alt" aria-labelledby="demos-title">
+      <section className="section" aria-labelledby="demos-title">
         <div className="container">
           <SectionHead
             id="demos-title"
             eyebrow="Demo restaurants"
-            title="One platform, very different restaurants."
+            title="More restaurants, very different rules."
             intro="We built these demo restaurants on the platform to show how it adapts to different concepts, brands and rules. They are product demonstrations, not client websites."
           />
-          <div className="grid grid--3">
-            {demoBuilds.map((d, i) => (
+          <div className="grid grid--4">
+            {demoBuilds.filter((d) => !d.featured).map((d, i) => (
               <Reveal as="article" key={d.name} delay={(i % 3) * 0.06} className="demo-card">
                 <div className="demo-card__img">
                   <img src={d.image} alt={`${d.name} demo restaurant — ${d.concept}`} width={960} height={640} loading="lazy" decoding="async" />

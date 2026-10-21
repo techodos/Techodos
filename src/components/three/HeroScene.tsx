@@ -66,7 +66,7 @@ function Panel({ w = 1.3, h = 0.82 }: { w?: number; h?: number }) {
       {[0.22, 0.05, -0.12].map((y, i) => (
         <mesh key={y} position={[-w / 2 + 0.18 + (i === 0 ? 0.2 : 0.35) , y, 0.02]}>
           <planeGeometry args={[i === 0 ? 0.4 : 0.7, 0.05]} />
-          <meshBasicMaterial color={i === 0 ? "#5eead4" : "#8b9cff"} transparent opacity={i === 0 ? 0.8 : 0.35} />
+          <meshBasicMaterial color={i === 0 ? "#c9cfff" : "#8b9cff"} transparent opacity={i === 0 ? 0.8 : 0.35} />
         </mesh>
       ))}
     </group>
@@ -114,7 +114,7 @@ function Shapes() {
         <Floating speed={0.9} offset={2} amp={0.14}>
           <mesh rotation={[0.9, 0.3, 0]}>
             <torusGeometry args={[0.38, 0.13, 24, 64]} />
-            <meshStandardMaterial color="#5eead4" metalness={0.25} roughness={0.28} />
+            <meshStandardMaterial color="#c9cfff" metalness={0.25} roughness={0.28} />
           </mesh>
         </Floating>
       </group>
@@ -158,7 +158,7 @@ export default function HeroScene({ active, reduced, compact }: { active: boolea
       <ambientLight intensity={0.45} />
       <directionalLight position={[4, 5, 5]} intensity={1.6} />
       <pointLight position={[-4, -2, 2]} intensity={14} color="#6f82ff" />
-      <pointLight position={[4, -1, 2]} intensity={8} color="#5eead4" />
+      <pointLight position={[4, -1, 2]} intensity={8} color="#c9cfff" />
       <Particles count={compact ? 260 : 700} />
       <Shapes />
     </Canvas>

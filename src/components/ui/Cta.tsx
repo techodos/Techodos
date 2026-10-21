@@ -27,7 +27,7 @@ export function CtaBand({
       See it running for <span className="serif">your</span> restaurant.
     </>
   ),
-  text = "Book a free, no-obligation demo. We'll walk you through the ordering website, the kitchen view and the admin dashboard, and answer every question about setup and pricing.",
+  text = "Book a free, no-obligation demo. We'll walk you through the ordering website, the kitchen view and the admin dashboard, and answer every question about setup and plans.",
 }: {
   title?: React.ReactNode;
   text?: string;

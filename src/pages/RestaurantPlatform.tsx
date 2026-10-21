@@ -162,7 +162,7 @@ export default function RestaurantPlatform() {
 
       <section className="section section--alt" id="pricing" aria-labelledby="pricing-title">
         <div className="container">
-          <SectionHead center id="pricing-title" eyebrow="Pricing" title="Choose a starting point." intro="Every plan is quoted for your restaurant after a free demo." />
+          <SectionHead center id="pricing-title" eyebrow="Pricing" title="Choose a starting point." intro="Flat monthly plans at early-bird prices, with no commission on orders." />
           <PricingPlans />
         </div>
       </section>

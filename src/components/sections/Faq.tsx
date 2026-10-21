@@ -1,4 +1,5 @@
 import { Plus } from "lucide-react";
+import { PRICE_PERIOD, formatPrice, plans } from "../../content/plans";
 
 export type QA = { q: string; a: string };
 
@@ -42,8 +43,8 @@ export const platformFaq: QA[] = [
     a: "Yes. You can sell per-head buffet packages (dine-in only), switch off the à la carte menu if you only run a buffet, and manage several branches with their own delivery zones and fees.",
   },
   {
-    q: "How is pricing worked out?",
-    a: "We quote per restaurant after a free demo. The price depends on the plan, the number of branches and how much setup help you want, such as importing your menu.",
+    q: "How much does it cost?",
+    a: `Plans are a flat price per restaurant, ${PRICE_PERIOD}: ${plans.map((p) => `${p.name} ${formatPrice(p.price)}`).join(", ")} at early-bird prices (regularly ${plans.map((p) => formatPrice(p.listPrice)).join(", ")}). There is no commission on your orders.`,
   },
   {
     q: "What happens after I request a demo?",

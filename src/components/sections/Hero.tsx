@@ -1,8 +1,8 @@
-import { ArrowRight, CalendarCheck, Check, FileSpreadsheet, Radio } from "lucide-react";
+import { ArrowDown, CalendarCheck, Check, FileSpreadsheet, Radio } from "lucide-react";
 import { motion, useMotionValue, useReducedMotion, useSpring, useTransform } from "motion/react";
 import { useEffect } from "react";
-import { Link } from "react-router-dom";
 import { screens } from "../../content/product";
+import { PRICE_PERIOD, formatPrice, plans } from "../../content/plans";
 import { HeroBackdrop } from "../three/HeroBackdrop";
 import { DemoButton } from "../ui/Cta";
 import { BrowserFrame, PhoneFrame } from "../ui/Frames";
@@ -51,9 +51,9 @@ function HeroStage() {
         <span>
           <strong>
             <span className="live-dot" />
-            Order is being prepared
+            QKXG-6EHHY · Preparing
           </strong>
-          <span>Live tracking · updates instantly</span>
+          <span>Spanish Latte ×2 · ready in 6 min</span>
         </span>
         </div>
       </motion.div>
@@ -64,8 +64,8 @@ function HeroStage() {
           <CalendarCheck />
         </span>
         <span>
-          <strong>Table for 4 · 19:30</strong>
-          <span>Reservation confirmed by email</span>
+          <strong>Table for 4 · Fri 19:30</strong>
+          <span>MM Alam Road · confirmed by email</span>
         </span>
         </div>
       </motion.div>
@@ -76,8 +76,8 @@ function HeroStage() {
           <FileSpreadsheet />
         </span>
         <span>
-          <strong>Sales report</strong>
-          <span>Export to CSV, Excel or PDF</span>
+          <strong>Today · Rs 41,860</strong>
+          <span>37 orders · export to PDF</span>
         </span>
         </div>
       </motion.div>
@@ -86,38 +86,39 @@ function HeroStage() {
 }
 
 export function Hero() {
+  const from = Math.min(...plans.map((p) => p.price));
   return (
     <section className="hero" aria-labelledby="hero-title">
       <HeroBackdrop />
       <div className="container hero__layout">
         <div className="hero__copy">
-          <Link to="/products/restaurant-platform" className="pill fade-up">
-            <span className="pill__tag">Product</span>
-            TechOdos Restaurant Platform
-            <ArrowRight aria-hidden="true" />
-          </Link>
+          <a href="#featured" className="pill fade-up">
+            <span className="pill__tag">Featured</span>
+            Blue Hour Coffee, built on our platform
+            <ArrowDown aria-hidden="true" />
+          </a>
           <h1 id="hero-title" className="fade-up">
-            Software that runs <span className="serif grad-text">real</span> businesses.
+            Online ordering your restaurant <span className="serif grad-text">owns</span>.
           </h1>
           <p className="lead fade-up">
-            TechOdos designs and builds SaaS products and custom web software. Our Restaurant Platform gives restaurants their own ordering
-            website, table reservations, live order tracking and a complete admin dashboard — in one system.
+            A branded website where guests order delivery, pickup or dine-in and book tables — plus the kitchen view, dashboard and reports your
+            team runs it from. From {formatPrice(from)} {PRICE_PERIOD}, with no commission on orders.
           </p>
           <div className="hero__actions fade-up">
             <DemoButton />
-            <Link to="/products/restaurant-platform" className="btn btn--ghost">
-              Explore the platform
-            </Link>
+            <a href="#try" className="btn btn--ghost">
+              Place a demo order
+            </a>
           </div>
-          <ul className="hero__trust fade-up" aria-label="Demo details">
+          <ul className="hero__trust fade-up" aria-label="Highlights">
             <li>
               <Check aria-hidden="true" /> Free, no-obligation demo
             </li>
             <li>
-              <Check aria-hidden="true" /> Delivery, pickup &amp; dine-in
+              <Check aria-hidden="true" /> Early-bird prices
             </li>
             <li>
-              <Check aria-hidden="true" /> Built phone-first
+              <Check aria-hidden="true" /> Cash, card &amp; JazzCash
             </li>
           </ul>
         </div>

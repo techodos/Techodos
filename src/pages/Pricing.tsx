@@ -1,50 +1,80 @@
 import { pages } from "../content/seo";
+import { SITE_URL } from "../config/site";
+import { PRICE_CURRENCY, PRICE_PERIOD, formatPrice, plans, savingPercent } from "../content/plans";
 import { Faq, faqJsonLd, type QA } from "../components/sections/Faq";
-import { PricingPlans } from "../components/sections/Pricing";
+import { PlanComparison, PricingPlans } from "../components/sections/Pricing";
 import { CtaBand } from "../components/ui/Cta";
 import { PageHero, SectionHead } from "../components/ui/Section";
 import { Seo } from "../components/ui/Seo";
 
+const [starter, growth, business] = plans;
+
 const pricingFaq: QA[] = [
   {
-    q: "Why don't you list prices?",
-    a: "Restaurants differ a lot — one café versus a buffet with several branches. We'd rather understand your setup in a short demo and quote a fair price than force you into a one-size package.",
+    q: "What does the early-bird price mean?",
+    a: `It is our launch price for the first restaurants on the platform: ${formatPrice(starter.price)} instead of ${formatPrice(starter.listPrice)} for Starter, ${formatPrice(growth.price)} instead of ${formatPrice(growth.listPrice)} for Growth and ${formatPrice(business.price)} instead of ${formatPrice(business.listPrice)} for Business, ${PRICE_PERIOD}.`,
+  },
+  {
+    q: "Do you take a commission on each order?",
+    a: "No. You pay a flat monthly plan. Orders, guests and their contact details stay with your restaurant — there is no per-order cut like a food marketplace takes.",
   },
   {
     q: "Can I start small and upgrade later?",
-    a: "Yes. Plans are built on the same platform, so moving from Starter to Growth or Business switches on more features without migrating anything.",
+    a: "Yes. Every plan runs on the same platform, so moving from Starter to Growth or Business switches on more features without migrating your menu, orders or customers.",
   },
   {
     q: "Is the demo really free?",
-    a: "Yes. The demo is free and comes with no obligation to buy.",
+    a: "Yes. The demo is free and comes with no obligation to buy. We show you the website, the kitchen view and the admin with a real demo restaurant.",
   },
   {
     q: "Do you help set up our menu?",
-    a: "Yes. Guided onboarding and menu setup are part of the Business plan and can be added to other plans — we'll discuss what you need during the demo.",
+    a: "Guided onboarding and menu setup are part of the Business plan. On Starter and Growth we walk you through the setup in the demo, and it can be added — we'll discuss what you need.",
   },
 ];
+
+const offersJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Product",
+  name: "TechOdos Restaurant Platform",
+  url: `${SITE_URL}/pricing`,
+  offers: plans.map((plan) => ({
+    "@type": "Offer",
+    name: plan.name,
+    price: plan.price,
+    priceCurrency: PRICE_CURRENCY === "$" ? "USD" : PRICE_CURRENCY,
+    description: `${plan.tagline} Early-bird price, ${savingPercent(plan)}% off ${formatPrice(plan.listPrice)}.`,
+  })),
+};
+
+const jsonLd = [faqJsonLd(pricingFaq), offersJsonLd];
 
 export default function Pricing() {
   return (
     <>
-      <Seo meta={pages.pricing} jsonLd={faqJsonLd(pricingFaq)} />
+      <Seo meta={pages.pricing} jsonLd={jsonLd} />
       <PageHero
         eyebrow="Pricing"
         title={
           <>
-            Simple plans, <span className="serif">tailored</span> pricing.
+            Clear plans, <span className="serif">early-bird</span> prices.
           </>
         }
-        intro="Pick the plan that matches how your restaurant works today. We'll confirm the price for your setup after a free demo."
+        intro={`From ${formatPrice(starter.price)} ${PRICE_PERIOD} for your own ordering website, kitchen view and admin. No commission on orders — and launch prices for our first restaurants.`}
       />
       <section className="section" style={{ paddingTop: 16 }} aria-label="Plans">
         <div className="container">
           <PricingPlans />
         </div>
       </section>
-      <section className="section section--alt" aria-labelledby="pfaq-title">
+      <section className="section section--alt" aria-labelledby="compare-title">
         <div className="container">
-          <SectionHead center id="pfaq-title" eyebrow="Pricing FAQ" title="About plans and quotes." />
+          <SectionHead center id="compare-title" eyebrow="Compare" title="Everything in each plan." intro="Each plan includes everything in the plan before it." />
+          <PlanComparison />
+        </div>
+      </section>
+      <section className="section" aria-labelledby="pfaq-title">
+        <div className="container">
+          <SectionHead center id="pfaq-title" eyebrow="Pricing FAQ" title="About plans and prices." />
           <Faq items={pricingFaq} />
         </div>
       </section>

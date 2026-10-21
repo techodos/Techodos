@@ -3,6 +3,7 @@ import { createRoot, hydrateRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import { AppRoutes } from "./App";
 import "./index.css";
+import "./sections.css";
 
 const container = document.getElementById("root")!;
 const app = (

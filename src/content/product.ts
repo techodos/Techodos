@@ -7,6 +7,7 @@ import {
   CreditCard,
   LayoutDashboard,
   MapPin,
+  MessageCircle,
   Palette,
   Percent,
   Radio,
@@ -91,7 +92,7 @@ export const featureGroups: { id: string; label: string; intro: string; features
         icon: UtensilsCrossed,
         title: "Menu management",
         benefit: "Update dishes, prices and photos yourself — changes appear on your website straight away.",
-        details: ["Categories, items, variants and add-on groups", "Availability and dietary information", "Image management"],
+        details: ["Categories, items, variants and add-on groups", "Availability and dietary information", "Upload dish photos from your phone or computer"],
       },
       {
         icon: Soup,
@@ -123,6 +124,12 @@ export const featureGroups: { id: string; label: string; intro: string; features
         title: "Flexible payments",
         benefit: "Accept the way your guests prefer to pay, with the right methods offered for each order type.",
         details: ["Cash on delivery, cash or card at the counter", "Bank transfer", "Online card payments (Stripe) and JazzCash mobile wallet"],
+      },
+      {
+        icon: MessageCircle,
+        title: "WhatsApp checkout",
+        benefit: "For guests who'd rather order on WhatsApp: the cart is sent to your number as a ready-to-read message, and the order still lands in your dashboard.",
+        details: ["Order summary sent to your WhatsApp", "Marked as a WhatsApp order in the admin", "Cash on delivery or at the counter"],
       },
       {
         icon: Ticket,
@@ -160,17 +167,30 @@ export const featureGroups: { id: string; label: string; intro: string; features
 
 export const allFeatures = featureGroups.flatMap((g) => g.features);
 
-/** Real screenshots of the product, captured from the platform's demo restaurant. */
+/**
+ * Real screenshots of the product, captured from Blue Hour Coffee — the platform's featured demo restaurant (a demo
+ * tenant with sample data, not a client). Re-capture them from the platform when its UI changes.
+ */
+const bh = "/screens/blue-hour";
 export const screens = {
-  storefrontHome: { src: "/screens/storefront-home.webp", alt: "Restaurant website home page built on the TechOdos Restaurant Platform, with Order online and Book a table actions", w: 1440, h: 900 },
-  storefrontMenu: { src: "/screens/storefront-menu.webp", alt: "Online menu with search, delivery, pickup and dine-in switch, and dishes with prices and dietary tags", w: 1440, h: 900 },
-  storefrontReservations: { src: "/screens/storefront-reservations.webp", alt: "Table reservation page with branch, date, party size and available time slots", w: 1440, h: 900 },
-  adminKitchen: { src: "/screens/admin-kitchen.webp", alt: "Admin kitchen view showing an active order ticket with one-tap status buttons", w: 1440, h: 900 },
-  adminMenu: { src: "/screens/admin-menu.webp", alt: "Admin menu management listing categories with edit and delete actions", w: 1440, h: 900 },
-  adminSettings: { src: "/screens/admin-settings.webp", alt: "Admin settings with feature switches, tax, service fees and payment methods", w: 1440, h: 900 },
-  adminReports: { src: "/screens/admin-reports.webp", alt: "Sales reports with totals, average order value, sales trend chart and CSV, Excel and PDF export", w: 1440, h: 900 },
-  mobileHome: { src: "/screens/mobile-home.webp", alt: "Restaurant website on a phone with bottom navigation for home, menu, booking and sign-in", w: 520, h: 1126 },
-  mobileMenu: { src: "/screens/mobile-menu.webp", alt: "Mobile menu with search and delivery, pickup and dine-in options", w: 520, h: 1126 },
+  storefrontHome: { src: `${bh}/home.webp`, alt: "Blue Hour Coffee website home page with Order ahead and See the menu buttons, opening hours and branch", w: 1440, h: 900 },
+  storefrontSections: { src: `${bh}/home-sections.webp`, alt: "Blue Hour Coffee home page sections below the hero", w: 1440, h: 900 },
+  storefrontMenu: { src: `${bh}/menu.webp`, alt: "Blue Hour online menu with search, category tabs and coffee dishes with photos, dietary tags, prep time and prices", w: 1440, h: 900 },
+  storefrontItem: { src: `${bh}/item.webp`, alt: "Dish page for an Espresso with size choice, kitchen note, quantity stepper and add to cart", w: 1440, h: 900 },
+  storefrontCart: { src: `${bh}/cart.webp`, alt: "Cart with three dishes, quantities and totals before checkout", w: 1440, h: 900 },
+  storefrontCheckout: { src: `${bh}/checkout.webp`, alt: "Checkout with delivery, pickup and dine-in choice, guest details and an order summary with tax and delivery fee", w: 1440, h: 900 },
+  storefrontReservations: { src: `${bh}/reservation.webp`, alt: "Table reservation page with branch, date, party size and available time slots", w: 1440, h: 900 },
+  adminDashboard: { src: `${bh}/admin-dashboard.webp`, alt: "Admin service dashboard with live order counts, latest orders and upcoming reservations", w: 1440, h: 900 },
+  adminOrders: { src: `${bh}/admin-orders.webp`, alt: "Admin orders list with status tabs, search and filters by type, payment and date", w: 1440, h: 900 },
+  adminKitchen: { src: `${bh}/admin-kitchen.webp`, alt: "Kitchen view with New, Preparing and Ready lanes and an order ticket with items, options and a timer", w: 1440, h: 900 },
+  adminMenu: { src: `${bh}/admin-menu.webp`, alt: "Admin menu management listing categories and dishes with availability switches", w: 1440, h: 900 },
+  adminItem: { src: `${bh}/admin-item.webp`, alt: "Editing a dish in the admin: details, price and a photo uploaded from the device", w: 1440, h: 900 },
+  adminZones: { src: `${bh}/admin-zones.webp`, alt: "Delivery zones with coverage areas, delivery fee and delivery time per branch", w: 1440, h: 900 },
+  adminSettings: { src: `${bh}/admin-settings.webp`, alt: "Admin settings with feature switches, tax, service fees and payment methods", w: 1440, h: 900 },
+  adminReports: { src: `${bh}/admin-reports.webp`, alt: "Sales reports with totals, average order value, sales trend chart and CSV, Excel and PDF export", w: 1440, h: 900 },
+  mobileHome: { src: `${bh}/m-home.webp`, alt: "Blue Hour website on a phone with the hero photo and bottom navigation", w: 780, h: 1688 },
+  mobileMenu: { src: `${bh}/m-menu.webp`, alt: "Blue Hour menu on a phone with dish cards, prices and add buttons", w: 780, h: 1688 },
+  mobileItem: { src: `${bh}/m-item.webp`, alt: "Dish page on a phone showing the branch it is served from, the price and sizes", w: 780, h: 1688 },
 } as const;
 
 export type Screen = (typeof screens)[keyof typeof screens];
