@@ -1053,7 +1053,7 @@ a.flow__step--cta:hover { background: linear-gradient(160deg, rgba(139, 156, 255
 .plan--highlight {
   border-color: rgba(139, 156, 255, 0.45);
   background: linear-gradient(180deg, rgba(139, 156, 255, 0.12), rgba(139, 156, 255, 0.02) 60%);
-  box-shadow: 0 30px 80px -40px rgba(111, 130, 255, 0.6);
+  box-shadow: 0 24px 60px -40px rgba(111, 130, 255, 0.5);
 }
 .plan__badge {
   position: absolute;
@@ -1068,11 +1068,6 @@ a.flow__step--cta:hover { background: linear-gradient(160deg, rgba(139, 156, 255
 }
 .plan h3 {
   font-size: 1.5rem;
-}
-.plan__tagline {
-  color: var(--text-2);
-  margin-top: 8px;
-  font-size: 0.95rem;
 }
 .plan__price {
   margin: 24px 0 4px;

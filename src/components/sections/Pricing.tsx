@@ -1,9 +1,9 @@
-import { Check, Minus } from "lucide-react";
+import { ArrowRight, Check, Minus } from "lucide-react";
 import { Link } from "react-router-dom";
-import { PRICE_PERIOD, comparisonRows, formatPrice, plans, savingPercent } from "../../content/plans";
+import { PRICE_PERIOD, formatPrice, planCardFeatures, planFeatureGroups, planIncludes, plans, savingPercent } from "../../content/plans";
 import { Reveal } from "../ui/Reveal";
 
-export function PricingPlans() {
+export function PricingPlans({ compareHref = "/pricing#compare" }: { compareHref?: string }) {
   return (
     <>
       <Reveal className="earlybird">
@@ -12,11 +12,16 @@ export function PricingPlans() {
       </Reveal>
       <div className="plans">
         {plans.map((plan, i) => (
-          <Reveal key={plan.name} delay={i * 0.08} className={`plan ${plan.highlight ? "plan--highlight" : ""}`} as="article">
+          <Reveal
+            key={plan.id}
+            delay={i * 0.08}
+            className={`plan plan--${plan.id} ${plan.highlight ? "plan--highlight" : ""}`}
+            as="article"
+          >
             {plan.highlight && <span className="plan__badge">Most popular</span>}
             <div className="plan__head">
               <h3>{plan.name}</h3>
-              <p className="plan__tagline">{plan.tagline}</p>
+              <p className="plan__headline">{plan.headline}</p>
             </div>
             <div className="plan__pricing">
               <p className="plan__price">
@@ -31,7 +36,12 @@ export function PricingPlans() {
                 <span className="plan__save">Save {savingPercent(plan)}%</span>
               </p>
             </div>
+            <p className="plan__desc">{plan.description}</p>
             <dl className="plan__facts">
+              <div>
+                <dt>Orders</dt>
+                <dd>{plan.orders}</dd>
+              </div>
               <div>
                 <dt>Covers</dt>
                 <dd>{plan.scope}</dd>
@@ -43,10 +53,10 @@ export function PricingPlans() {
             </dl>
             <p className="plan__includes">{plan.includesFrom ? `Everything in ${plan.includesFrom}, plus:` : "Includes:"}</p>
             <ul className="checklist">
-              {plan.features.map((f) => (
-                <li key={f}>
+              {planCardFeatures(plan).map((f) => (
+                <li key={f.label}>
                   <Check aria-hidden="true" />
-                  {f}
+                  {f.label}
                 </li>
               ))}
             </ul>
@@ -54,21 +64,25 @@ export function PricingPlans() {
               to={`/book-demo?plan=${encodeURIComponent(plan.name)}`}
               className={`btn ${plan.highlight ? "btn--primary" : "btn--ghost"} btn--block`}
             >
-              Start with {plan.name}
+              {plan.cta}
             </Link>
           </Reveal>
         ))}
       </div>
       <p className="pricing-note">
-        Every plan starts with a free demo of the platform running a real demo restaurant. Prices are per restaurant, {PRICE_PERIOD}.
+        Every plan starts with a free demo of the platform running a real demo restaurant. Prices are per restaurant, {PRICE_PERIOD}.{" "}
+        <a href={compareHref} className="pricing-note__link">
+          Compare every feature
+          <ArrowRight aria-hidden="true" />
+        </a>
       </p>
     </>
   );
 }
 
-/** Feature-by-plan table. A feature is included from its plan onwards (each plan includes the one before it). */
+/** Feature-by-plan table, grouped. Reads the same feature list as the cards, so the two always agree. */
 export function PlanComparison() {
-  const rows = comparisonRows();
+  const cols = plans.length + 1;
   return (
     <div className="compare" role="region" aria-label="Compare plans" tabIndex={0}>
       <table>
@@ -77,7 +91,7 @@ export function PlanComparison() {
           <tr>
             <th scope="col">Feature</th>
             {plans.map((plan) => (
-              <th scope="col" key={plan.name} className={plan.highlight ? "is-highlight" : undefined}>
+              <th scope="col" key={plan.id} className={plan.highlight ? "is-highlight" : undefined}>
                 <span className="compare__plan">{plan.name}</span>
                 <span className="compare__price">
                   {formatPrice(plan.price)} <s>{formatPrice(plan.listPrice)}</s>
@@ -88,34 +102,51 @@ export function PlanComparison() {
         </thead>
         <tbody>
           <tr>
+            <th scope="row">New orders arrive</th>
+            {plans.map((plan) => (
+              <td key={plan.id} className={`compare__text ${plan.highlight ? "is-highlight" : ""}`}>
+                {plan.orders}
+              </td>
+            ))}
+          </tr>
+          <tr>
             <th scope="row">Branches</th>
             {plans.map((plan) => (
-              <td key={plan.name} className={plan.highlight ? "is-highlight" : undefined}>
+              <td key={plan.id} className={`compare__text ${plan.highlight ? "is-highlight" : ""}`}>
                 {plan.scope}
               </td>
             ))}
           </tr>
-          {rows.map((row) => (
-            <tr key={row.feature}>
-              <th scope="row">{row.feature}</th>
-              {plans.map((plan, index) => (
-                <td key={plan.name} className={plan.highlight ? "is-highlight" : undefined}>
-                  {index >= row.from ? (
-                    <>
-                      <Check className="compare__yes" aria-hidden="true" />
-                      <span className="sr-only">Included</span>
-                    </>
-                  ) : (
-                    <>
-                      <Minus className="compare__no" aria-hidden="true" />
-                      <span className="sr-only">Not included</span>
-                    </>
-                  )}
-                </td>
-              ))}
-            </tr>
-          ))}
         </tbody>
+        {planFeatureGroups.map((group) => (
+          <tbody key={group.id}>
+            <tr className="compare__group">
+              <th scope="colgroup" colSpan={cols}>
+                <span>{group.label}</span>
+              </th>
+            </tr>
+            {group.features.map((feature) => (
+              <tr key={feature.label}>
+                <th scope="row">{feature.label}</th>
+                {plans.map((plan) => (
+                  <td key={plan.id} className={plan.highlight ? "is-highlight" : undefined}>
+                    {planIncludes(plan, feature) ? (
+                      <>
+                        <Check className="compare__yes" aria-hidden="true" />
+                        <span className="sr-only">Included</span>
+                      </>
+                    ) : (
+                      <>
+                        <Minus className="compare__no" aria-hidden="true" />
+                        <span className="sr-only">Not included</span>
+                      </>
+                    )}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        ))}
       </table>
     </div>
   );

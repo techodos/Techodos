@@ -11,7 +11,7 @@ export const pages = {
     path: "/",
     title: "TechOdos | Software & SaaS Solutions",
     description:
-      `Online ordering your restaurant owns: a branded ordering website, reservations, live order tracking, kitchen view and admin dashboard — from ${fromPrice} ${PRICE_PERIOD}, no commission. Try a demo order at Blue Hour Coffee.`,
+      `Online ordering your restaurant owns: a branded ordering website, reservations, live order tracking, kitchen view and admin dashboard. Plans from ${fromPrice} ${PRICE_PERIOD}, no commission. Try a demo order at Blue Hour Coffee.`,
   },
   products: {
     path: "/products",

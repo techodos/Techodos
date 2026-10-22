@@ -102,7 +102,7 @@ export function Hero() {
           </h1>
           <p className="lead fade-up">
             A branded website where guests order delivery, pickup or dine-in and book tables — plus the kitchen view, dashboard and reports your
-            team runs it from. From {formatPrice(from)} {PRICE_PERIOD}, with no commission on orders.
+            team runs it from. Plans from {formatPrice(from)} {PRICE_PERIOD}, with no commission on orders.
           </p>
           <div className="hero__actions fade-up">
             <DemoButton />

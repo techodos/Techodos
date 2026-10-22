@@ -2,7 +2,7 @@ import { ArrowRight, Check, Copy, MailCheck, Pencil } from "lucide-react";
 import { useEffect, useRef, useState, type ChangeEvent, type FormEvent } from "react";
 import { useSearchParams } from "react-router-dom";
 import { demoSubject, site } from "../../config/site";
-import { plans } from "../../content/plans";
+import { findPlan } from "../../content/plans";
 import {
   demoEmailBody,
   demoMailto,
@@ -42,8 +42,7 @@ export function DemoForm() {
 
   // Read after mount: the page is prerendered without a query string.
   useEffect(() => {
-    const planParam = params.get("plan");
-    setPlan(plans.some((p) => p.name === planParam) ? planParam! : undefined);
+    setPlan(findPlan(params.get("plan"))?.name);
   }, [params]);
 
   useEffect(() => {
